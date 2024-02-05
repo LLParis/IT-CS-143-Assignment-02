@@ -40,8 +40,10 @@ public class TallyVotes2 {
   public static ArrayList<Ballot> readFile(Scanner input) {
     ArrayList<Ballot> result = new ArrayList<>();
     while (input.hasNextLine()) {
-      String text = input.nextLine();
-      result.add(new Ballot(text.split("\t")));
+      String text = input.nextLine().trim();
+      if (!text.isEmpty()) {
+        result.add(new Ballot(text.split("\t")));
+      }
     }
     return result;
   }
@@ -100,10 +102,14 @@ public class TallyVotes2 {
   }
 
   // Eliminates the given candidate from all ballots.
-  public static void eliminate(String candidate,
-      ArrayList<Ballot> ballots) {
-    for (Ballot b : ballots) {
+  public static void eliminate(String candidate, ArrayList<Ballot> ballots) {
+    Iterator<Ballot> iterator = ballots.iterator();
+    while (iterator.hasNext()) {
+      Ballot b = iterator.next();
       b.eliminate(candidate);
+      if (b.isEmpty()) {
+        iterator.remove(); // Remove the ballot if it's empty
+      }
     }
   }
 }

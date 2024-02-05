@@ -16,7 +16,11 @@ public class Ballot implements Comparable<Ballot> {
   // returns the current first choice for this ballot or "none" if there are
   // no longer any choices for this ballot
   public String getCandidate() {
-    return preferences.get(0);
+    if (preferences.isEmpty()) {
+      return "none";
+    } else {
+      return preferences.get(0);
+    }
   }
 
   // eliminates the given candidate from consideration
@@ -28,5 +32,10 @@ public class Ballot implements Comparable<Ballot> {
   // alphabetically by their first choice candidate
   public int compareTo(Ballot other) {
     return getCandidate().compareTo(other.getCandidate());
+  }
+
+  public Boolean isEmpty() {
+
+    return preferences.isEmpty();
   }
 }
