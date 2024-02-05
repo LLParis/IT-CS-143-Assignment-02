@@ -2,26 +2,35 @@
 // using a data file of voting preferences.
 // This file should be *almost* identical to the code explained in the book
 // Lines have been added to main to ask the user for the file to read
+// London Paris
+// IT-CS143
+// Assignment 2 Ranked Choice Voting
 
 import java.util.*;
 import java.io.*;
 
 public class TallyVotes2 {
-  public static void main(String[] args)
-      throws FileNotFoundException {
-    System.out.println("What file contains the ballot information?");
+  public static void main(String[] args) throws FileNotFoundException {
     Scanner keyboard = new Scanner(System.in);
-    String fileName = keyboard.nextLine();
-    Scanner input = new Scanner(new File(fileName));
-    ArrayList<Ballot> ballots = readFile(input);
-    int round = 1;
-    boolean done = false;
-    while (!done) {
-      System.out.println("Round #" + round);
-      Collections.sort(ballots);
-      done = oneRound(ballots);
-      System.out.println("------------------------------");
-      round++;
+    while (true) {
+      System.out.println("What file contains the ballot information? (type quit to end the program)");
+      String fileName = keyboard.nextLine();
+      if (fileName.equalsIgnoreCase("quit")) {
+        System.out.println("Goodbye!");
+        break;
+      }
+
+      Scanner input = new Scanner(new File(fileName));
+      ArrayList<Ballot> ballots = readFile(input);
+      int round = 1;
+      boolean done = false;
+      while (!done) {
+        System.out.println("Round #" + round);
+        Collections.sort(ballots);
+        done = oneRound(ballots);
+        System.out.println("------------------------------");
+        round++;
+      }
     }
   }
 
@@ -98,3 +107,5 @@ public class TallyVotes2 {
     }
   }
 }
+
+
